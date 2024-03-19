@@ -50,7 +50,7 @@ namespace nsdf
     return true;
   }
 
-  SIREN::Matrix SIREN::mat_mul(const SIREN::Matrix& A, const SIREN::Matrix& B) {
+  SIREN::Matrix SIREN::mat_mul(const SIREN::Matrix& A, const SIREN::Matrix& B) const {
     size_t n = A.size();
     size_t m = A[0].size();
     size_t p = B[0].size();
@@ -67,7 +67,7 @@ namespace nsdf
     return C;
   }
 
-  SIREN::Matrix SIREN::mat_sum(const SIREN::Matrix& A, const SIREN::Matrix& B) {
+  SIREN::Matrix SIREN::mat_sum(const SIREN::Matrix& A, const SIREN::Matrix& B) const {
     size_t n = A.size();
     size_t p = A[0].size();
     SIREN::Matrix C(n, std::vector<float>(p, 0.0));
@@ -81,7 +81,7 @@ namespace nsdf
     return C;
   }
 
-  SIREN::Matrix SIREN::row_to_column(const Row& row) {
+  SIREN::Matrix SIREN::row_to_column(const Row& row) const {
     SIREN::Matrix transposed_row(row.size(), std::vector<float>(1));
     for (size_t i = 0; i < row.size(); i++) {
       transposed_row[i][0] = row[i];
@@ -89,7 +89,7 @@ namespace nsdf
     return transposed_row;
   }
 
-  SIREN::Matrix SIREN::sin(const SIREN::Matrix& input, float w0) {
+  SIREN::Matrix SIREN::sin(const SIREN::Matrix& input, float w0) const {
     size_t n = input.size();
     size_t p = input[0].size();
     SIREN::Matrix C(n, std::vector<float>(p, 0.0));
@@ -103,7 +103,7 @@ namespace nsdf
     return C;
   }
 
-  float SIREN::forward(const std::vector<float>& point)
+  float SIREN::forward(const std::vector<float>& point) const
   {
     assert(point.size() == 3);
     SIREN::Matrix current = row_to_column(point);

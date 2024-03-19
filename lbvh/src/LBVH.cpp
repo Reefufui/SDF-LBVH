@@ -188,6 +188,7 @@ namespace engine {
         }
     }
 
+#ifndef SIREN_AS
     void LBVH::generateElements(std::vector<Element> &elements, AABB *extent) {
         const std::string MODEL_FILE_NAME = "dragon.obj";
         const std::string MODEL_PATH_DIRECTORY = engine::Paths::m_resourceDirectoryPath + "/models";
@@ -241,4 +242,5 @@ namespace engine {
             }
         }
     }
+#endif
 }

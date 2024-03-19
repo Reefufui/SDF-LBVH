@@ -24,15 +24,19 @@ namespace nsdf
     std::vector<Matrix> As;
     std::vector<Row> bs;
 
-    Matrix mat_mul(const Matrix& A, const Matrix& B);
+    private:
 
-    Matrix mat_sum(const Matrix& A, const Matrix& B);
+    Matrix mat_mul(const Matrix& A, const Matrix& B) const;
 
-    Matrix row_to_column(const Row& row);
+    Matrix mat_sum(const Matrix& A, const Matrix& B) const;
 
-    Matrix sin(const Matrix& input, float w0 = 30);
+    Matrix row_to_column(const Row& row) const;
 
-    float forward(const std::vector<float>& point);
+    Matrix sin(const Matrix& input, float w0 = 30) const;
+
+    public:
+
+    float forward(const std::vector<float>& point) const;
 
     bool from_file(const char *filename, const SDFArch& arch);
   };

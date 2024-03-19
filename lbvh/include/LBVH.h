@@ -2,7 +2,10 @@
 
 #include "AABB.h"
 #include "LBVHPass.h"
+
+#ifndef SIREN_AS
 #include "tinyobjloader/tiny_obj_loader.h"
+#endif
 
 #include <glm/glm.hpp>
 #include <random>
