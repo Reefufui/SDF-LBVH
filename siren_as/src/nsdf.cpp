@@ -1,9 +1,10 @@
 #include <cassert>
+#include <cmath>
 #include <cstdio>
 #include <cstring>
 #include <errno.h>
+#include <stdexcept>
 #include <vector>
-#include <cmath>
 
 #include "nsdf.h"
 
@@ -19,13 +20,13 @@ namespace nsdf
     }
   }
 
-  bool SDFArch::from_file(const char *filename)
+  void SDFArch::from_file(const char *filename)
   {
     FILE *f = fopen(filename, "r");
     if (!f)
     {
       fprintf(stderr, "failed to open file %s. Errno %d\n",filename, (int)errno);
-      return false;
+      throw std::runtime_error("ARCH INIT FAILED");
     }
 
     int input = 3;
@@ -45,9 +46,8 @@ namespace nsdf
     if (res != 0)
     {
       fprintf(stderr, "failed to close file %s. fclose returned %d\n",filename, res);
-      return false;
+      throw std::runtime_error("ARCH INIT FAILED");
     }
-    return true;
   }
 
   SIREN::Matrix SIREN::mat_mul(const SIREN::Matrix& A, const SIREN::Matrix& B) const {
@@ -138,13 +138,13 @@ namespace nsdf
     return current[0][0];
   }
 
-  bool SIREN::from_file(const char *filename, const SDFArch& arch)
+  void SIREN::from_file(const char *filename, const SDFArch& arch)
   {
     FILE *f = fopen(filename, "r");
     if (!f)
     {
       fprintf(stderr, "failed to open file %s. Errno %d\n",filename, (int)errno);
-      return false;
+      throw std::runtime_error("WEIGHTS INIT FAILED");
     }
 
     size_t layers_count = arch.layers.size();
@@ -169,35 +169,8 @@ namespace nsdf
     if (res != 0)
     {
       fprintf(stderr, "failed to close file %s. fclose returned %d\n",filename, res);
-      return false;
+      throw std::runtime_error("WEIGHTS INIT FAILED");
     }
-    return true;
-  }
-
-  bool SDFTest::from_file(const char *filename)
-  {
-    FILE *f = fopen(filename, "rb");
-    if (!f)
-    {
-      fprintf(stderr, "failed to open file %s. Errno %d\n",filename, (int)errno);
-      return false;
-    }
-
-    fread(&points_count, sizeof(int), 1, f);
-
-    points.resize(points_count * 3);
-    fread(points.data(), sizeof(float), points_count * 3, f);
-    etalon_dists.resize(points_count);
-    fread(etalon_dists.data(), sizeof(float), points_count, f);
-
-    file_check(f, filename);
-    int res = fclose(f);
-    if (res != 0)
-    {
-      fprintf(stderr, "failed to close file %s. fclose returned %d\n",filename, res);
-      return false;
-    }
-    return true;
   }
 }
 

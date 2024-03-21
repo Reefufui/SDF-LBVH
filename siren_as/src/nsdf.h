@@ -13,7 +13,7 @@ namespace nsdf
 
     std::vector<Shape> layers;
 
-    bool from_file(const char *filename);
+    void from_file(const char *filename);
   };
 
   struct SIREN
@@ -38,16 +38,7 @@ namespace nsdf
 
     float forward(const std::vector<float>& point) const;
 
-    bool from_file(const char *filename, const SDFArch& arch);
-  };
-
-  struct SDFTest
-  {
-    int points_count;
-    std::vector<float> points; // pos_0.x, pos_0.y, pos_0.z, pos_1.x, ...
-    std::vector<float> etalon_dists; // dist_0, dist_0, dist_0, dist_1, ...
-
-    bool from_file(const char *filename);
+    void from_file(const char *filename, const SDFArch& arch);
   };
 
 }
